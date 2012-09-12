@@ -1,14 +1,25 @@
-﻿@model IEnumerable<NeuropsychInventory.Models.Inventory>
+﻿@model NeuropsychInventory.ViewModels.TakeInventoryVM
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
+    @ViewBag.Error
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (Model.AllInventoriesComplete == true)
+{
+    <p>
+        @Html.ActionLink("Begin New Inventory", "TakeInventory")
+    </p>
+}
+else
+{
+    <p>
+        @Html.ActionLink("Continue Current Inventory", "TakeInventory")
+    </p>
+}
+
 <table>
     <tr>
         <th>
@@ -17,16 +28,15 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Inventories) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Date)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Details", "Details", new { id=item.Id })
         </td>
     </tr>
 }
-
 </table>
+

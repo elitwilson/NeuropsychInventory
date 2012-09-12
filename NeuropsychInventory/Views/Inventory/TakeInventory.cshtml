@@ -1,0 +1,21 @@
+﻿@model NeuropsychInventory.ViewModels.TakeInventoryVM
+
+@{
+    ViewBag.Title = "TakeInventory";
+}
+
+@foreach (var item in Model.Tests)
+{
+    if (item.Products.Count > 0)
+    {
+        @Html.ActionLink(@item.Abbreviation, "TakeItemInventory", new { inventoryId = Model.InventoryId, testId = item.Id })
+        <br />
+    }
+
+    
+}
+
+<p />
+@Html.ActionLink("Conclude", "ConcludeInventory")
+<p />
+@Html.ActionLink("Back to List", "Index")

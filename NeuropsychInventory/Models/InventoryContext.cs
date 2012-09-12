@@ -13,7 +13,7 @@ namespace NeuropsychInventory.Models
         public DbSet<Test> Tests { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<Inventory> Inventory { get; set; }
+        public DbSet<Inventory> Inventories { get; set; }
         public DbSet<InventoryItem> InventoryItems { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

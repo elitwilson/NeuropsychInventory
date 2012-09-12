@@ -8,6 +8,11 @@
 
 <fieldset>
     <legend>Inventory</legend>
+    @foreach (var item in Model.InventoryItems)
+    {
+        
+    }
+
 
     <div class="display-label">
          @Html.DisplayNameFor(model => model.Date)
@@ -17,11 +22,9 @@
     </div>
     @foreach (var item in Model.InventoryItems)
     {
-        @item.Product.Name;
+        <strong>@item.Product.Test.Name</strong> <br />
+        @item.Product.Name <p />
     }
-    <div>
-
-    </div>
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |

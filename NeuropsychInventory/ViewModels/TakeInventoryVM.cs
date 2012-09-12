@@ -6,14 +6,19 @@ using NeuropsychInventory.Models;
 
 namespace NeuropsychInventory.ViewModels
 {
-    public class InventoryVM
+    public class TakeInventoryVM
     {
+        public int InventoryId { get; set; }
         public DateTime Date { get; set; }
         public string TestName { get; set; }
         public string ProductName { get; set; }
-        public int QuantityInInventory { get; set; }
-        public int MaxInStock { get; set; }
 
+
+        public IEnumerable<Test> Tests { get; set; }
         public IEnumerable<InventoryItem> InventoryItems { get; set; }
+
+        //For index.cshtml
+        public IEnumerable<Inventory> Inventories { get; set; }
+        public bool AllInventoriesComplete { get; set; }
     }
 }

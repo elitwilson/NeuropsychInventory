@@ -16,7 +16,7 @@
             @Html.LabelFor(model => model.TestId, "Test")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("TestId", String.Empty)
+            @Html.DropDownList("TestId", String.Empty) | @Html.ActionLink("New Test", "CreateTest")
             @Html.ValidationMessageFor(model => model.TestId)
         </div>
 

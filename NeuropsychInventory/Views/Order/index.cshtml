@@ -1,0 +1,73 @@
+﻿@model NeuropsychInventory.ViewModels.OrderVM
+
+@{
+    ViewBag.Title = "index";
+}
+
+<h2>Ordering</h2>
+
+@if (Model.Inventory.HasAssociatedOrder)
+{
+    <h3>@Html.ActionLink("Place Order Manually", "ManualOrder")</h3>
+    <h4>Note: Ordering by inventory is not available because the most recent inventory has already been used to place an order.
+        <br />
+        To order by inventory, you must first complete a new inventory.
+    </h4>
+    <br />
+}
+else
+{
+    <h3>Order by @Html.ActionLink("Latest Inventory", "AutoOrder") OR @Html.ActionLink("Order Manually", "ManualOrder")</h3>
+    <p />    
+}
+    <h4>Last order placed on @Model.Order.Date.ToShortDateString()</h4>
+    <table>
+        <tr>
+            <th>
+                Test
+            </th>
+            <th>
+                Product
+            </th>
+            <th>
+                # Ordered
+            </th>
+            <th>
+                Price
+            </th>
+        </tr>
+
+            @foreach (var item in Model.Order.OrderItems)
+            {
+                <tr>
+                    <td>
+                        @item.Product.Test.Abbreviation
+                    </td>
+                    <td>
+                        @item.Product.Name
+                    </td>
+                    <td>
+                        @item.Quantity
+                    </td>
+                    <td>
+                        @if(item.Product.PricePerUnit != null)
+                        {
+                            @:$@Html.Raw(item.Product.PricePerUnit)                            
+                        }
+                        else
+                        {
+                            @:NA
+                        }
+                        
+                    </td>
+                </tr>
+            }        
+        <tr>
+            <td></td>
+            <td></td>
+            <td>Total:</td>
+            <td>$@Model.Order.TotalPrice</td>
+        </tr>
+    </table>
+
+

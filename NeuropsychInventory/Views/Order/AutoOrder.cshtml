@@ -1,0 +1,52 @@
+﻿@model NeuropsychInventory.Models.Order
+
+@{
+    ViewBag.Title = "AutoOrder";
+}
+
+<h2>Auto Order</h2>
+(Based on last inventory)
+<h3>Review Order and Confirm:</h3>
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>Order</legend>
+        <table>
+        <tr>
+            <th>Test</th>
+            <th>Product</th>
+            <th>To Order</th>
+            <th>Total Price</th>
+        </tr>
+@*        @foreach(var item in Model.OrderItems)
+        {
+            <tr>
+                <td>@item.Product.Test.Abbreviation</td>
+                <td>@item.Product.Name</td>
+                <td><input type="text" value="@item.Quantity" name=""/></td>
+                <td>$@(item.Product.PricePerUnit * item.Quantity)</td>
+            </tr>
+        }*@
+            @for(int i = 0; i < Model.OrderItems.Count(); i++)
+            {
+                @Html.HiddenFor(x => x.OrderItems[i].ProductId)
+                <tr>
+                    <td>@Model.OrderItems[i].Product.Test.Abbreviation</td>
+                    <td>@Model.OrderItems[i].Product.Name</td>
+                    <td>@Html.TextBoxFor(x => x.OrderItems[i].Quantity)</td>
+                    <td>$@(Model.OrderItems[i].Product.PricePerUnit * Model.OrderItems[i].Quantity)</td>
+                </tr>
+            }
+        </table>
+        <h3>Total:</h3>
+        @Html.HiddenFor(x => x.TotalPrice)
+        Cost = $@Model.TotalPrice
+        <p />
+        <input type="submit" value="Confirm" /> or <input type="button" value="Cancel" />
+
+    </fieldset>
+}
+
+<p />
+

@@ -16,7 +16,7 @@ namespace NeuropsychInventory.Models
 
         [Display(Name="Unit Price")]
         [DataType(DataType.Currency)]
-        public decimal? PricePerUnit { get; set; }
+        public decimal PricePerUnit { get; set; }
 
         [Display(Name="Items/Unit")]
         public int ItemsPerUnit { get; set; }
@@ -26,7 +26,7 @@ namespace NeuropsychInventory.Models
         public string Description { get; set; }
          
         [Display(Name="Ideal #")]
-        public int? MaxInStock { get; set; }
+        public int MaxInStock { get; set; }
            
         [Display(Name="Units In Stock")]
         public int UnitsInStock { get; set; }

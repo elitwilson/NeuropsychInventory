@@ -14,7 +14,7 @@ namespace NeuropsychInventory.Controllers
         private InventoryContext db = new InventoryContext();
 
         //
-        // GET: /Product/
+        // GET: /Test/
 
         public ActionResult Index()
         {
@@ -23,7 +23,7 @@ namespace NeuropsychInventory.Controllers
         }
 
         //
-        // GET: /Product/Details/5
+        // GET: /Test/Details/5
 
         public ActionResult Details(int id = 0)
         {
@@ -36,19 +36,19 @@ namespace NeuropsychInventory.Controllers
         }
 
         //
-        // GET: /Product/Create
+        // GET: /Test/Create
 
-        public ActionResult Create()
+        public ActionResult CreateProduct()
         {
             ViewBag.TestId = new SelectList(db.Tests, "Id", "Name");
             return View();
         }
 
         //
-        // POST: /Product/Create
+        // POST: /Test/Create
 
         [HttpPost]
-        public ActionResult Create(Product product)
+        public ActionResult CreateProduct(Product product)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +62,33 @@ namespace NeuropsychInventory.Controllers
         }
 
         //
-        // GET: /Product/Edit/5
+        //GET: /Test/CreateTest
+
+        public ActionResult CreateTest()
+        {
+            ViewBag.CompanyId = new SelectList(db.Companies, "Id", "Name");
+            return View();
+        }
+
+        //
+        //POST: /Test/CreateTest
+
+        [HttpPost]
+        public ActionResult CreateTest(Test test)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Tests.Add(test);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.CompanyId = new SelectList(db.Companies, "Id", "Name");
+            return View(test);
+        }
+
+        //
+        // GET: /Test/Edit/5
 
         public ActionResult Edit(int id = 0)
         {
@@ -76,7 +102,7 @@ namespace NeuropsychInventory.Controllers
         }
 
         //
-        // POST: /Product/Edit/5
+        // POST: /Test/Edit/5
 
         [HttpPost]
         public ActionResult Edit(Product product)
@@ -92,7 +118,7 @@ namespace NeuropsychInventory.Controllers
         }
 
         //
-        // GET: /Product/Delete/5
+        // GET: /Test/Delete/5
 
         public ActionResult Delete(int id = 0)
         {
@@ -105,7 +131,7 @@ namespace NeuropsychInventory.Controllers
         }
 
         //
-        // POST: /Product/Delete/5
+        // POST: /Test/Delete/5
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)

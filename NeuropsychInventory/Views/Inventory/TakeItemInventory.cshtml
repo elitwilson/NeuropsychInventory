@@ -1,0 +1,38 @@
+﻿@model NeuropsychInventory.ViewModels.TestItemInventoryVM
+
+@{
+    ViewBag.Title = "TakeItemInventory";
+}
+
+<h2>@Model.Test.Abbreviation</h2>
+
+@using (Html.BeginForm("TakeItemInventory", "Inventory")) {
+    @Html.HiddenFor(m => m.InventoryId)
+<table>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>In Inventory</th>
+            <th>Ideal #</th>
+        </tr>
+    </thead>
+    @for (int i = 0; i < Model.RegularlyOrderedProducts.Count(); i++ )
+    {
+        @Html.HiddenFor(m => m.RegularlyOrderedProducts[i].Id)
+        <tr>
+            <td>
+                @Model.RegularlyOrderedProducts[i].Name
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.RegularlyOrderedProducts[i].UnitsInStock)
+            </td>    
+            <td>
+                @Model.RegularlyOrderedProducts[i].MaxInStock
+            </td>
+        </tr>
+    }
+</table>
+
+<input type="submit" value="Submit" />
+
+}

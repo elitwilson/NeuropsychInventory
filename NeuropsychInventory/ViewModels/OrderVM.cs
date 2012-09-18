@@ -8,8 +8,8 @@ namespace NeuropsychInventory.ViewModels
 {
     public class OrderVM
     {
+        public IEnumerable<Order> Orders { get; set; }
         public Inventory Inventory { get; set; }
-        public Order Order { get; set; }
     }
     public class AutoOrderVM
     {

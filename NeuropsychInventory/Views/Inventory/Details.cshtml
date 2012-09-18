@@ -5,27 +5,29 @@
 }
 
 <h2>Details</h2>
+<h3>@Model.Date.ToShortDateString()</h3>
 
-<fieldset>
-    <legend>Inventory</legend>
+<table>
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Product</th>
+            <th>Product #</th>
+            <th>In Stock</th>
+            <th>Ideal #</th>
+        </tr>
+    </thead>
     @foreach (var item in Model.InventoryItems)
     {
-        
+        <tr>
+            <td>@item.Product.Test.Abbreviation</td>
+            <td>@item.Product.Name</td>
+            <td>@item.Product.ProductNumber</td>
+            <td>@item.Quantity</td>
+            <td>@item.Product.MaxInStock</td>
+        </tr>
     }
-
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Date)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Date)
-    </div>
-    @foreach (var item in Model.InventoryItems)
-    {
-        <strong>@item.Product.Test.Name</strong> <br />
-        @item.Product.Name <p />
-    }
-</fieldset>
+</table>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
     @Html.ActionLink("Back to List", "Index")

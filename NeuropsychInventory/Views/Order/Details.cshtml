@@ -1,0 +1,37 @@
+﻿@model NeuropsychInventory.ViewModels.OrderDetailsVM
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<h3>@Model.Order.Date.ToShortDateString()</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Test</th>
+            <th>Product</th>
+            <th>Product #</th>
+            <th>Quantity</th>
+            <th>Cost</th>
+        </tr>
+    </thead>
+    @foreach(var item in Model.ProductsByTest)
+    {
+        <tr>
+            <td>@item.TestName</td>
+            <td>@item.ProductName</td>
+            <td>@item.ProductNumber</td>
+            <td>@item.Quantity</td>
+            <td>$@(item.Cost * item.Quantity)</td>
+        </tr>
+    }
+</table>
+<p>
+    Total Price: $@Model.Order.TotalPrice
+</p>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Order.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

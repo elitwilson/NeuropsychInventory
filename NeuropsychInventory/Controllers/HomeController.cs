@@ -15,18 +15,22 @@ namespace NeuropsychInventory.Controllers
 
         public ActionResult Index()
         {
-            //Trying to query date of most recently taken Inventory
-            //var q = from n in db.Inventory
-            //        group n by n.Id into g
-            //        select new { Date = g.Min(t => t.Date) };
+            var lastInventory = db.Inventories
+                .OrderByDescending(x => x.Date)
+                .Select(q => q.Date)
+                .First()
+                .ToShortDateString();
 
-            //var lastInventory = q.FirstOrDefault();
+            var lastOrder = db.Orders
+                .OrderByDescending(x => x.Date)
+                .Select(q => q.Date)
+                .First()
+                .ToShortDateString();
 
             ViewBag.Message = "Modify this template to kick-start your ASP.NET MVC application.";
-            
 
-            ViewBag.LastInventory = "NA";
-            ViewBag.LastOrder = "NA";
+            ViewBag.LastInventory = lastInventory;
+            ViewBag.LastOrder = lastOrder;
 
             return View();
         }

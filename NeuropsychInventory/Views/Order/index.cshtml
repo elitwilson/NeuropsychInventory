@@ -20,54 +20,22 @@ else
     <h3>Order by @Html.ActionLink("Latest Inventory", "AutoOrder") OR @Html.ActionLink("Order Manually", "ManualOrder")</h3>
     <p />    
 }
-    <h4>Last order placed on @Model.Order.Date.ToShortDateString()</h4>
     <table>
         <tr>
             <th>
-                Test
+                Recent Orders:
             </th>
-            <th>
-                Product
-            </th>
-            <th>
-                # Ordered
-            </th>
-            <th>
-                Price
-            </th>
+            <th></th>
         </tr>
 
-            @foreach (var item in Model.Order.OrderItems)
+            @foreach (var item in Model.Orders)
             {
                 <tr>
                     <td>
-                        @item.Product.Test.Abbreviation
-                    </td>
-                    <td>
-                        @item.Product.Name
-                    </td>
-                    <td>
-                        @item.Quantity
-                    </td>
-                    <td>
-                        @if(item.Product.PricePerUnit != null)
-                        {
-                            @:$@Html.Raw(item.Product.PricePerUnit)                            
-                        }
-                        else
-                        {
-                            @:NA
-                        }
-                        
+                        @Html.ActionLink(@item.Date.ToShortDateString(), "Details", new { id = @item.Id })
                     </td>
                 </tr>
-            }        
-        <tr>
-            <td></td>
-            <td></td>
-            <td>Total:</td>
-            <td>$@Model.Order.TotalPrice</td>
-        </tr>
+            }       
     </table>
 
 

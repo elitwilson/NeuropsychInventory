@@ -26,18 +26,23 @@ namespace NeuropsychInventory.Controllers
                 .ToList()
                 .LastOrDefault();
 
-            Order order = db.Orders
-                .Select(x => x)
-                .ToList()
-                .LastOrDefault();
+            vm.Orders = db.Orders.Select(x => x)
+                .OrderByDescending(x => x.Date);
 
-            /*Need to use an inner join for InventoryItems and Products
+            vm.Inventory = inventory;
+
+            return View(vm);
+
+            /* Code kept for historical significance, and informative of conducting 
+             * inner joins:
+             * 
+             * Need to use an inner join for InventoryItems and Products
              * Typical format for inner join is as follows:
              * 
              * from table1 in db.Table1
              * join table2 in db.Table2 on table1.field equals table2.field
              * select table1
-             */            
+                         
             inventory.InventoryItems = (
                 from invItem in inventory.InventoryItems
                 join product in db.Products on invItem.ProductId equals product.Id
@@ -47,11 +52,10 @@ namespace NeuropsychInventory.Controllers
                 from ordItem in order.OrderItems
                 join product in db.Products on ordItem.ProductId equals product.Id
                 select ordItem).OrderBy(x => x.Product.Test.Abbreviation).ToList();
-
+            
             vm.Inventory = inventory;
             vm.Order = order;
-
-            return View(vm);
+            */
             
         }
 
@@ -60,7 +64,70 @@ namespace NeuropsychInventory.Controllers
 
         public ActionResult Details(int id)
         {
-            return View();
+            OrderDetailsVM vm = new OrderDetailsVM();
+
+            vm.Order = db.Orders.Find(id);
+
+            //var productsByTest = (
+            //    from product in db.Products
+            //    join test in db.Tests on product.TestId equals test.Id
+            //    select product).OrderBy(x => x.Test.Abbreviation).ToList();
+
+            var productsByTest = (
+                from p in db.Products
+                join o in db.OrderItems on p.Id equals o.ProductId
+                select new
+                {
+                    p.TestId, 
+                    p.Id,
+                    TestName = p.Test.Name,
+                    p.Name,
+                    p.PricePerUnit,
+                    p.ProductNumber,
+                    o.Quantity,
+                    o.OrderId
+                }).OrderBy(x => x.TestName).ToList();
+
+            var allOrderItems = from ordItems in db.OrderItems
+                                where ordItems.OrderId == id
+                                select ordItems;
+
+            var orderItems = (
+                from ordItem in db.OrderItems
+                join product in db.Products on ordItem.ProductId equals product.Id
+                select ordItem).OrderBy(x => x.Product.Test.Abbreviation).ToList();
+
+            foreach (var item in productsByTest)
+            {
+                if (item.OrderId == vm.Order.Id && item.Quantity != 0)
+                {
+                    OrderDetailsVM.ProductByTest product = new OrderDetailsVM.ProductByTest
+                    {
+                        TestId = item.TestId,
+                        TestName = item.TestName,
+                        ProductName = item.Name,
+                        ProductNumber = item.ProductNumber,
+                        Quantity = item.Quantity,
+                        Cost = item.PricePerUnit
+                    };
+                    vm.ProductsByTest.Add(product);
+                }
+
+            }
+
+
+            foreach (var item in allOrderItems)
+            {
+                item.Product = db.Products.Find(item.ProductId);
+                vm.Order.OrderItems.Add(item);
+            }
+
+            if (vm.Order == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(vm);
         }
 
         //

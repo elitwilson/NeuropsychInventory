@@ -18,7 +18,9 @@ namespace NeuropsychInventory.Controllers
 
         public ActionResult Index()
         {
-            var products = db.Products.Include(p => p.Test);
+            var products = db.Products
+                .Include(p => p.Test)
+                .OrderBy(p => p.Test.Abbreviation);
             return View(products.ToList());
         }
 

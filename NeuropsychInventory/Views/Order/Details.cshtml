@@ -6,31 +6,34 @@
 
 <h2>Details</h2>
 
-<h3>@Model.Order.Date.ToShortDateString()</h3>
-<table>
+<h3>Order Date: @Model.Order.Date.ToShortDateString()</h3>
+
+@foreach (var c in Model.Companies)
+{
+    <h3>@Html.ActionLink(c.CompanyName, "Details", "Company", new { id = c.CompanyId }, null)</h3>
+    <table id="order-details-table">
     <thead>
         <tr>
-            <th>Test</th>
-            <th>Product</th>
-            <th>Product #</th>
-            <th>Quantity</th>
-            <th>Cost</th>
+            <th style="width: 300px">Test</th>
+            <th style="width: 100px">Product</th>
+            <th style="width: 100px">Product #</th>
+            <th style="width: 100px">Quantity</th>
+            <th style="width: 100px">Cost/Unit</th>
         </tr>
     </thead>
-    @foreach(var item in Model.ProductsByTest)
+    @foreach(var item in c.ProductsByCompany)
     {
         <tr>
             <td>@item.TestName</td>
             <td>@item.ProductName</td>
             <td>@item.ProductNumber</td>
             <td>@item.Quantity</td>
-            <td>$@(item.Cost * item.Quantity)</td>
+            <td>@item.PricePerUnit</td>
         </tr>
     }
 </table>
-<p>
-    Total Price: $@Model.Order.TotalPrice
-</p>
+}
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.Order.Id }) |
     @Html.ActionLink("Back to List", "Index")

@@ -101,16 +101,16 @@ namespace NeuropsychInventory.Controllers
             {
                 if (item.OrderId == vm.Order.Id && item.Quantity != 0)
                 {
-                    OrderDetailsVM.ProductByTest product = new OrderDetailsVM.ProductByTest
+                    OrderDetailsVM.ProductByCompany product = new OrderDetailsVM.ProductByCompany
                     {
                         TestId = item.TestId,
                         TestName = item.TestName,
                         ProductName = item.Name,
                         ProductNumber = item.ProductNumber,
                         Quantity = item.Quantity,
-                        Cost = item.PricePerUnit
+                        PricePerUnit = item.PricePerUnit
                     };
-                    vm.ProductsByTest.Add(product);
+                    //vm.ProductsByCompany.Add(product);
                 }
 
             }

@@ -10,6 +10,7 @@ namespace NeuropsychInventory.ViewModels
     {
         public IEnumerable<Order> Orders { get; set; }
         public Inventory Inventory { get; set; }
+        
     }
     public class AutoOrderVM
     {

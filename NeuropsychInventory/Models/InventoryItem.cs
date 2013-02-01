@@ -10,6 +10,7 @@ namespace NeuropsychInventory.Models
         public int ProductId { get; set; }
         public int InventoryId { get; set; }
         public int Quantity { get; set; }
+        public bool IsInventoried { get; set; }
 
         public Product Product { get; set; }
         public Inventory Inventory { get; set; }

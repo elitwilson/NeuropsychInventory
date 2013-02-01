@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NeuropsychInventory.Models;
+using NeuropsychInventory.ViewModels;
+using NeuropsychInventory.Utilities;
 
 namespace NeuropsychInventory.Controllers
 {
@@ -16,12 +18,33 @@ namespace NeuropsychInventory.Controllers
         //
         // GET: /Test/
 
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
+            TestVM vm = new TestVM();
+            
             var products = db.Products
                 .Include(p => p.Test)
-                .OrderBy(p => p.Test.Abbreviation);
-            return View(products.ToList());
+                .OrderBy(p => p.Test.Abbreviation).ToList();
+
+            var allTests = (from t in db.Tests
+                            select new {
+                                t.Id, t.Abbreviation
+                            }).OrderBy(x => x.Abbreviation).ToList();
+
+            foreach (var item in allTests) {
+                TestVM.Test test = new TestVM.Test {
+                    Id = item.Id, 
+                    Abbreviation = item.Abbreviation
+                };
+
+                var productsByTestId = from p in products
+                              where p.TestId == item.Id
+                              select p;
+
+                vm.ProductsByTest.AddRange(productsByTestId);
+                vm.Tests.Add(test);
+            }
+
+            return View(vm);
         }
 
         //

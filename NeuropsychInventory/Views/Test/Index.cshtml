@@ -4,12 +4,50 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Tests</h2>
+@Html.ActionLink("New Test", "CreateTest")
 @foreach (var item in Model.Tests) {
-    @item.Abbreviation <br />
+    <h3><a href="/Test/Details/@item.Id">@item.Abbreviation</a></h3>
+    <table>
+        <colgroup>
+            <col style="width:250px" />
+            <col style="width:75px" />
+            <col style="width:150px" />
+            <col style="width:125px" />
+            <col style="width:100px" />
+            <col style="width:125px" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Product #</th>
+                <th>Items Per Unit</th>
+                <th># In Stock</th>
+                <th>Ideal Number</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.ProductsByTest) {
+                if (product.TestId == item.Id) {
+                 <tr>
+                    <td>@product.Name</td>
+                    <td>@product.PricePerUnit</td>
+                    <td>@product.ProductNumber</td>
+                    <td>@product.ItemsPerUnit</td>
+                    <td>@product.UnitsInStock</td>
+                    <td>@product.MaxInStock</td>
+                    <td>@Html.ActionLink("Edit", "EditProduct", new { id = product.Id })
+                    | @Html.ActionLink("Delete", "DeleteProduct", new { id = product.Id })</td>
+                </tr>       
+                }        
+
+            }
+            <tr><td>@Html.ActionLink("New", "CreateProduct", new { id = item.Id}) </td></tr>
+        </tbody>
+    </table>
+    <p></p>
 }
 <p>
-    @foreach (var item in Model.ProductsByTest) {
-        @item.Name <br />
-    }
 </p>

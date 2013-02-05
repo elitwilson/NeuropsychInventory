@@ -264,8 +264,8 @@
     <Content Include="Views\Test\IndexBak.cshtml" />
     <Content Include="Views\Test\Details.cshtml" />
     <Content Include="Views\Test\CreateProduct.cshtml" />
-    <Content Include="Views\Test\Edit.cshtml" />
-    <Content Include="Views\Test\Delete.cshtml" />
+    <Content Include="Views\Test\EditProduct.cshtml" />
+    <Content Include="Views\Test\DeleteProduct.cshtml" />
     <Content Include="Views\Inventory\Index.cshtml" />
     <Content Include="Views\Inventory\Details.cshtml" />
     <Content Include="Views\Inventory\TakeInventory.cshtml" />
@@ -276,6 +276,7 @@
     <Content Include="Views\Order\ManualOrder.cshtml" />
     <Content Include="Views\Order\Details.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Test\EditTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

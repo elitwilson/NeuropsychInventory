@@ -21,4 +21,10 @@ namespace NeuropsychInventory.ViewModels
         }
 
     }
+
+    public class CreateProductVM {
+        public int TestId { get; set; }
+        public string TestName { get; set; }
+        public Product Product { get; set; }
+    }
 }

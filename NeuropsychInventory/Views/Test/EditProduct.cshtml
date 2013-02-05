@@ -13,14 +13,7 @@
         <legend>Product</legend>
 
         @Html.HiddenFor(model => model.Id)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.TestId, "Test")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("TestId", String.Empty)
-            @Html.ValidationMessageFor(model => model.TestId)
-        </div>
+        @Html.HiddenFor(model => model.TestId)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)

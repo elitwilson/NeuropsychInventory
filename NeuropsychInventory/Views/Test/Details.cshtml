@@ -1,4 +1,4 @@
-﻿@model NeuropsychInventory.Models.Product
+﻿@model NeuropsychInventory.Models.Test
 
 @{
     ViewBag.Title = "Details";
@@ -6,73 +6,12 @@
 
 <h2>Details</h2>
 
-<fieldset>
-    <legend>Product</legend>
+<h4>@Html.DisplayNameFor(model => model.Name)</h4>
+@Html.DisplayFor(model => model.Name)
+<h4>@Html.DisplayNameFor(model => model.Abbreviation)</h4>
+@Html.DisplayFor(model => model.Abbreviation)
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Test.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Test.Name)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.PricePerUnit)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.PricePerUnit)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.ItemsPerUnit)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ItemsPerUnit)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.ProductNumber)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ProductNumber)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Description)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Description)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.MaxInStock)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.MaxInStock)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.UnitsInStock)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.UnitsInStock)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.RegularlyOrdered)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.RegularlyOrdered)
-    </div>
-</fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Edit", "EditTest", new { id=Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

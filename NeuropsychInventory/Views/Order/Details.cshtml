@@ -12,16 +12,24 @@
 {
     <h3>@Html.ActionLink(c.CompanyName, "Details", "Company", new { id = c.CompanyId }, null)</h3>
     <table id="order-details-table">
+    <colgroup>
+        <col style="width:250px" />
+        <col style="width:75px" />
+        <col style="width:150px" />
+        <col style="width:125px" />
+        <col style="width:100px" />
+        <col style="width:125px" />
+    </colgroup>
     <thead>
         <tr>
-            <th style="width: 300px">Test</th>
-            <th style="width: 100px">Product</th>
-            <th style="width: 100px">Product #</th>
-            <th style="width: 100px">Quantity</th>
-            <th style="width: 100px">Cost/Unit</th>
+            <th>Test</th>
+            <th>Product</th>
+            <th>Product #</th>
+            <th>Quantity</th>
+            <th>Cost/Unit</th>
         </tr>
     </thead>
-    @foreach(var item in c.ProductsByCompany)
+    @foreach(var item in Model.ProductsByCompany)
     {
         <tr>
             <td>@item.TestName</td>

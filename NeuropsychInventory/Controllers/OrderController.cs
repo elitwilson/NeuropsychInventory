@@ -65,68 +65,20 @@ namespace NeuropsychInventory.Controllers
         public ActionResult Details(int id)
         {
             OrderDetailsVM vm = new OrderDetailsVM();
-
             vm.Order = db.Orders.Find(id);
-
-            //var productsByTest = (
-            //    from product in db.Products
-            //    join test in db.Tests on product.TestId equals test.Id
-            //    select product).OrderBy(x => x.Test.Abbreviation).ToList();
-
-            var productsByTest = (
-                from p in db.Products
-                join o in db.OrderItems on p.Id equals o.ProductId
-                select new
-                {
-                    p.TestId, 
-                    p.Id,
-                    TestName = p.Test.Name,
-                    p.Name,
-                    p.PricePerUnit,
-                    p.ProductNumber,
-                    o.Quantity,
-                    o.OrderId
-                }).OrderBy(x => x.TestName).ToList();
-
-            var allOrderItems = from ordItems in db.OrderItems
-                                where ordItems.OrderId == id
-                                select ordItems;
-
-            var orderItems = (
-                from ordItem in db.OrderItems
-                join product in db.Products on ordItem.ProductId equals product.Id
-                select ordItem).OrderBy(x => x.Product.Test.Abbreviation).ToList();
-
-            foreach (var item in productsByTest)
-            {
-                if (item.OrderId == vm.Order.Id && item.Quantity != 0)
-                {
-                    OrderDetailsVM.ProductByCompany product = new OrderDetailsVM.ProductByCompany
-                    {
-                        TestId = item.TestId,
-                        TestName = item.TestName,
-                        ProductName = item.Name,
-                        ProductNumber = item.ProductNumber,
-                        Quantity = item.Quantity,
-                        PricePerUnit = item.PricePerUnit
-                    };
-                    //vm.ProductsByCompany.Add(product);
-                }
-
+            foreach (var item in vm.Order.OrderItems) {
+                OrderDetailsVM.Product product = new OrderDetailsVM.Product {
+                    TestId = item.Product.TestId,
+                    TestName = item.Product.Test.Abbreviation,
+                    CompanyId = item.Product.Test.Company.Id,
+                    CompanyName = item.Product.Test.Company.Name,
+                    ProductName = item.Product.Name,
+                    ProductNumber = item.Product.ProductNumber,
+                    Quantity = item.Quantity,
+                    PricePerUnit = item.Product.PricePerUnit
+                };
+                vm.ProductsByCompany.Add(product);
             }
-
-
-            foreach (var item in allOrderItems)
-            {
-                item.Product = db.Products.Find(item.ProductId);
-                vm.Order.OrderItems.Add(item);
-            }
-
-            if (vm.Order == null)
-            {
-                return HttpNotFound();
-            }
-
             return View(vm);
         }
 

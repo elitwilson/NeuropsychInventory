@@ -14,19 +14,15 @@ namespace NeuropsychInventory.ViewModels
         {
             public int CompanyId { get; set; }
             public string CompanyName { get; set; }
-            public IList<OrderDetailsVM.ProductByCompany> ProductsByCompany { get; set; }
-            public Company()
-            {
-                ProductsByCompany = new List<ProductByCompany>();
-            }
         }
 
-        public class ProductByCompany
+        public class Product
         {
             public int? TestId { get; set; }
+            public string TestName { get; set; }
             public int OrderId { get; set; }
             public int CompanyId { get; set; }
-            public string TestName { get; set; }
+            public string CompanyName { get; set; }
             public string ProductName { get; set; }
             public string ProductNumber { get; set; }
             public int Quantity { get; set; }
@@ -35,7 +31,7 @@ namespace NeuropsychInventory.ViewModels
 
         public OrderDetailsVM()
         {
-
+            ProductsByCompany = new List<Product>();
         }
     }
 }

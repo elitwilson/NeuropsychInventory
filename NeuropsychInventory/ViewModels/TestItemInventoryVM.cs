@@ -10,6 +10,6 @@ namespace NeuropsychInventory.ViewModels
     {
         public int InventoryId { get; set; }
         public Test Test { get; set; }
-        public IList<Product> RegularlyOrderedProducts { get; set; }        
+        public IList<Product> RegularlyOrderedProducts { get; set; }
     }
 }

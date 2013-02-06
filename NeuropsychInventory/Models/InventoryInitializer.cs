@@ -14,7 +14,8 @@ namespace NeuropsychInventory.Models
             {
                 new Company { Id=1, Name="Pearson" },
                 new Company { Id=2, Name="PAR" },
-                new Company { Id=3, Name="Riverside Publishing" }
+                new Company { Id=3, Name="Riverside Publishing" },
+                new Company { Id=4, Name="Gordon Manufacturer" }
             };
             companies.ForEach(c => context.Companies.Add(c));
 
@@ -23,7 +24,8 @@ namespace NeuropsychInventory.Models
                 new Test { Id=1, CompanyId = 1, Name = "Wechsler Adult Intelligence Scale -IV", Abbreviation = "WAIS-IV" },
                 new Test { Id=2, CompanyId = 1, Name = "Wechsler Memory Scale - IV", Abbreviation = "WMS-IV" },
                 new Test { Id=3, CompanyId = 2, Name = "Wisconsin Card Sorting Test", Abbreviation="WCST" },
-                new Test { Id=4, CompanyId = 2, Name = "Gordon Diagnostic System", Abbreviation = "Gordon" }
+                new Test { Id=4, CompanyId = 4, Name = "Gordon Diagnostic System", Abbreviation = "Gordon" },
+                new Test { Id=5, CompanyId = 3, Name = "Asshole Rating Scale", Abbreviation = "ARS" }
             };
             tests.ForEach(t => context.Tests.Add(t));
 
@@ -39,7 +41,8 @@ namespace NeuropsychInventory.Models
                 new Product { Id=6, TestId=3, RegularlyOrdered=false, Name="Stimulus Cards", PricePerUnit=50.00m, ItemsPerUnit=1, MaxInStock=10, UnitsInStock=10, Description="Complete Kit", ProductNumber="112-3314-551" },
                 new Product { Id=7, TestId=3, RegularlyOrdered=true, Name="Record Forms", PricePerUnit=100.00m, ItemsPerUnit=25, MaxInStock=50, UnitsInStock=10, Description="NA", ProductNumber="112-3314-783" },
                 new Product { Id=8, TestId=3, RegularlyOrdered=false, Name="Manual", PricePerUnit=39.99m, ItemsPerUnit=1, MaxInStock=10, UnitsInStock=10, Description="NA", ProductNumber="112-3314-151" },
-                new Product { Id=9, TestId=4, RegularlyOrdered=true, Name="Record Forms", PricePerUnit=39.99m, ItemsPerUnit=30, MaxInStock=50, UnitsInStock=10, Description="NA", ProductNumber="GD1451" }
+                new Product { Id=9, TestId=4, RegularlyOrdered=true, Name="Record Forms", PricePerUnit=39.99m, ItemsPerUnit=30, MaxInStock=50, UnitsInStock=10, Description="NA", ProductNumber="GD1451" },
+                new Product { Id=10, TestId=5, RegularlyOrdered=true, Name="Forms", PricePerUnit=19.99m, ItemsPerUnit=30, MaxInStock=50, UnitsInStock=15, Description="NA", ProductNumber="ASS-HOLE" }
             };
             products.ForEach(p => context.Products.Add(p));
 
@@ -54,7 +57,9 @@ namespace NeuropsychInventory.Models
             {
                 new OrderItem { OrderId=2, ProductId=2, Quantity=1 }, 
                 new OrderItem { OrderId=2, ProductId=3, Quantity=30 }, 
-                new OrderItem { OrderId=2, ProductId=4, Quantity=20 }
+                new OrderItem { OrderId=2, ProductId=4, Quantity=20 },
+                new OrderItem { OrderId=2, ProductId=9, Quantity=35 },
+                new OrderItem { OrderId=2, ProductId=10, Quantity=30 }
             };
             orderItems.ForEach(o => context.OrderItems.Add(o));
 

@@ -124,11 +124,10 @@ namespace NeuropsychInventory.Controllers
         public ActionResult TakeItemInventory(int inventoryId, int testId)
         {
             TestItemInventoryVM vm = new TestItemInventoryVM();
-            var regularlyOrderedProducts = from x in db.Products
+            vm.RegularlyOrderedProducts = (from x in db.Products
                                           where x.TestId==testId && x.RegularlyOrdered == true
-                                          select x;
+                                          select x).ToList();
 
-            vm.RegularlyOrderedProducts = regularlyOrderedProducts.ToList();
             vm.InventoryId = inventoryId;
             vm.Test = db.Tests.Find(testId);
             Inventory inventory = db.Inventories.Find(inventoryId);
@@ -175,6 +174,12 @@ namespace NeuropsychInventory.Controllers
             var inventories = db.Inventories.Select(x => x).ToList();
             var inv = inventories.LastOrDefault();
             inv.Completed = true;
+
+            //Need to reset IsInventoried values all to 'false'
+            foreach (var item in db.InventoryItems.Where(x => x.InventoryId == inv.Id)) {
+                item.IsInventoried = false;
+            }
+
             db.Entry(inv).State = EntityState.Modified;
             db.SaveChanges();
 

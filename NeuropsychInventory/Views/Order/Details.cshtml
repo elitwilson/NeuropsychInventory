@@ -29,15 +29,18 @@
             <th>Cost/Unit</th>
         </tr>
     </thead>
-    @foreach(var item in Model.ProductsByCompany)
+    @foreach(var item in Model.ProductsByOrder)
     {
-        <tr>
-            <td>@item.TestName</td>
-            <td>@item.ProductName</td>
-            <td>@item.ProductNumber</td>
-            <td>@item.Quantity</td>
-            <td>@item.PricePerUnit</td>
-        </tr>
+        if (item.CompanyId == c.CompanyId) {
+            <tr>
+                <td>@item.TestName</td>
+                <td>@item.ProductName</td>
+                <td>@item.ProductNumber</td>
+                <td>@item.Quantity</td>
+                <td>@item.PricePerUnit</td>
+            </tr>
+        }
+
     }
 </table>
 }

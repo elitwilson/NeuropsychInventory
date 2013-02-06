@@ -65,6 +65,23 @@ namespace NeuropsychInventory.Controllers
         public ActionResult Details(int id)
         {
             OrderDetailsVM vm = new OrderDetailsVM();
+
+            var companiesFromOrder = (from c in db.Companies
+                                      join o in db.OrderItems on c.Id equals o.Product.Test.CompanyId
+                                      where o.OrderId == id
+                                      select c)
+                                      .Distinct()
+                                      .OrderBy(x => x.Name)
+                                      .ToList();
+
+            foreach (var c in companiesFromOrder) {
+                OrderDetailsVM.Company company = new OrderDetailsVM.Company {
+                    CompanyId = c.Id,
+                    CompanyName = c.Name
+                };
+                vm.Companies.Add(company);
+            }
+
             vm.Order = db.Orders.Find(id);
             foreach (var item in vm.Order.OrderItems) {
                 OrderDetailsVM.Product product = new OrderDetailsVM.Product {
@@ -77,8 +94,16 @@ namespace NeuropsychInventory.Controllers
                     Quantity = item.Quantity,
                     PricePerUnit = item.Product.PricePerUnit
                 };
-                vm.ProductsByCompany.Add(product);
+                vm.ProductsByOrder.Add(product);
             }
+
+            //LINQ Query used here simply to sort results. Could write an extension method
+            //to add this functionality to IList (saw a blog post on it)
+            vm.ProductsByOrder = (from p in vm.ProductsByOrder
+                                  select p)
+                                  .OrderBy(x => x.TestName)
+                                  .ThenBy(x => x.ProductName)
+                                  .ToList();
             return View(vm);
         }
 

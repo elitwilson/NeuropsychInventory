@@ -8,7 +8,7 @@ namespace NeuropsychInventory.ViewModels
     {
         public Order Order { get; set; }
         public IList<OrderDetailsVM.Company> Companies { get; set; }
-        public IList<Product> ProductsByCompany { get; set; }
+        public IList<Product> ProductsByOrder { get; set; }
 
         public class Company
         {
@@ -31,7 +31,8 @@ namespace NeuropsychInventory.ViewModels
 
         public OrderDetailsVM()
         {
-            ProductsByCompany = new List<Product>();
+            ProductsByOrder = new List<Product>();
+            Companies = new List<OrderDetailsVM.Company>();
         }
     }
 }

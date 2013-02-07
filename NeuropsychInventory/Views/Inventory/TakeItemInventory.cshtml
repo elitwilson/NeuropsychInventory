@@ -31,12 +31,7 @@
                 @Model.RegularlyOrderedProducts[i].MaxInStock
             </td>
             <td>
-                @if (Model.RegularlyOrderedProducts[i].IsInventoried == true) {
-                    @:Inventoried!
-                }
-                else {
-                    @:Not Inventoried...
-                }
+                @Html.CheckBoxFor(x => x.RegularlyOrderedProducts[i].IsInventoried)
             </td>
         </tr>
     }

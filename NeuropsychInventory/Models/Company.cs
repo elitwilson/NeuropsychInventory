@@ -16,6 +16,8 @@ namespace NeuropsychInventory.Models
         public string Phone { get; set; }
         public string Website { get; set; }
         public string Notes { get; set; }
+        public string ContractNumber { get; set; }
+        public string VendorNumber { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
     }

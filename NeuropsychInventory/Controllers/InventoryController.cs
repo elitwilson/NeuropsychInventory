@@ -76,12 +76,8 @@ namespace NeuropsychInventory.Controllers
             TakeInventoryVM vm = new TakeInventoryVM();
             Inventory takeInventory = new Inventory();
 
-            vm.Tests = from x in db.Tests
-                       orderby x.Abbreviation ascending
-                       select x;
-
-            if (db.Inventories.All(x => x.Completed))
-            {
+            //Determine if an inventory exists. Create one if it doesn't.
+            if (db.Inventories.All(x => x.Completed)) {
 
                 takeInventory.Date = DateTime.Now;
 
@@ -89,18 +85,57 @@ namespace NeuropsychInventory.Controllers
                 db.SaveChanges();
 
                 vm.InventoryId = takeInventory.Id;
-                return View(vm);
             }
 
-            else
-            {
+            else {
                 var inventories = db.Inventories.Select(x => x).ToList();
                 var inv = inventories.LastOrDefault();
                 vm.InventoryId = inv.Id;
-
-                return View(vm);
             }
 
+            //Get list of tests to display on view
+            var testsToInventory = (from x in db.Tests
+                                   where x.Products.Count() > 0 
+                                   select x).OrderBy(x => x.Abbreviation).ToList();
+
+            var invItems = (from i in db.InventoryItems
+                            where i.InventoryId == vm.InventoryId
+                            select i);
+
+            var regularlyOrderedProducts = (from p in db.Products
+                                           where p.RegularlyOrdered == true
+                                           select p).ToList();
+
+            foreach (var item in testsToInventory) {
+                TakeInventoryVM.Test test = new TakeInventoryVM.Test();
+                foreach (var p in item.Products) {
+                    if (p.RegularlyOrdered == true) {
+                        test.Id = item.Id;
+                        test.TestName = item.Abbreviation;
+                    }
+                }
+                vm.Tests.Add(test);
+            }
+            foreach (var item in vm.Tests) {
+                //Determine how to set IsComplete property
+                var invItemsForTest = (from i in invItems
+                                       where i.Product.TestId == item.Id
+                                       select i).ToList();
+
+                var regOrderedByTest = (from p in regularlyOrderedProducts
+                                        where p.TestId == item.Id
+                                        select p).ToList();
+
+                //For Test.IsComplete to be 'true' there must be the same number of InventoryItems as there are RegularlyOrderedProducts
+                //    and their 'IsComplete' properties must all be set to 'true'
+                if (invItemsForTest.Count() == regOrderedByTest.Count() && invItemsForTest.All(x => x.IsInventoried)) {
+                    item.IsComplete = true;
+                }
+                else {
+                    item.IsComplete = false;
+                }
+            }
+            return View(vm);
         }
 
         //
@@ -141,7 +176,7 @@ namespace NeuropsychInventory.Controllers
                     Id = item.Id,
                     Name = item.Name,
                     MaxInStock = item.MaxInStock,
-                    UnitsInStock = item.UnitsInStock
+                    UnitsInStock = item.UnitsInStock,
                 };
 
                 var invItem = (from i in invItems
@@ -149,7 +184,7 @@ namespace NeuropsychInventory.Controllers
                                select i).FirstOrDefault();
 
                 if (invItem != null) {
-                    p.IsInventoried = true;
+                    p.IsInventoried = invItem.IsInventoried;
                 }
                 vm.RegularlyOrderedProducts.Add(p);
             }
@@ -174,31 +209,36 @@ namespace NeuropsychInventory.Controllers
                 var retrievedInvItem = (from i in db.InventoryItems
                                     where i.ProductId == product.Id && i.InventoryId == inventory.Id
                                     select i).FirstOrDefault();
-                
+                InventoryItem invItem = new InventoryItem {
+                    Product = product,
+                    ProductId = product.Id,
+                    Inventory = inventory,
+                    InventoryId = inventory.Id,
+                    Quantity = item.UnitsInStock
+                };
+
                 //Ensure Quantity has changed before trying to set values                
                 if (item.UnitsInStock != product.UnitsInStock) {
-                    InventoryItem invItem = new InventoryItem {
-                        Product = product,
-                        ProductId = product.Id,
-                        Inventory = inventory,
-                        InventoryId = inventory.Id,
-                        Quantity = item.UnitsInStock,
-                        IsInventoried = true
-                    };
+                    invItem.IsInventoried = true;
+                }
 
-                    //Set UnitsInStock on Product
-                    product.UnitsInStock = item.UnitsInStock;
-                    db.Entry(product).State = EntityState.Modified;
+                //If the InventoryItem is different from what's passed from the view, always take what's passed from the view
+                else if (item.IsInventoried != invItem.IsInventoried) {
+                    invItem.IsInventoried = item.IsInventoried;
+                }
 
-                    //If record exists, update it.
-                    if (retrievedInvItem != null) {
-                        db.Entry(retrievedInvItem).CurrentValues.SetValues(invItem);
-                    }
+                //Set UnitsInStock on Product
+                product.UnitsInStock = item.UnitsInStock;
+                db.Entry(product).State = EntityState.Modified;
 
-                    //If record doesn't exist, add it
-                    else {
-                        db.InventoryItems.Add(invItem);
-                    }
+                //If record exists, update it.
+                if (retrievedInvItem != null) {
+                    db.Entry(retrievedInvItem).CurrentValues.SetValues(invItem);
+                }
+
+                //If record doesn't exist, add it
+                else {
+                    db.InventoryItems.Add(invItem);
                 }
                 db.SaveChanges();
             }
@@ -214,7 +254,6 @@ namespace NeuropsychInventory.Controllers
             var inv = inventories.LastOrDefault();
             inv.Completed = true;
 
-            //Need to reset IsInventoried values all to 'false'
             foreach (var item in db.InventoryItems.Where(x => x.InventoryId == inv.Id)) {
                 item.IsInventoried = false;
             }

@@ -127,13 +127,17 @@ namespace NeuropsychInventory.Controllers
 
             foreach (var item in inventory.InventoryItems)
             {
-                OrderItem orderItem = new OrderItem();
-                orderItem.ProductId = item.ProductId;
-                orderItem.Quantity = item.Product.MaxInStock - item.Product.UnitsInStock;
-                orderItem.Product = item.Product;
-                orderItem.Order = order;
-                orderItem.OrderId = 0;
-                order.OrderItems.Add(orderItem);
+                OrderItem orderItem = new OrderItem {
+                    ProductId = item.ProductId,
+                    Quantity = item.Product.MaxInStock - item.Product.UnitsInStock,
+                    Product = item.Product,
+                    Order = order,
+                    OrderId = 0
+                };
+                if (orderItem.Quantity > 0) {
+                    order.OrderItems.Add(orderItem);
+                }
+                
                 
             }
 
@@ -150,12 +154,23 @@ namespace NeuropsychInventory.Controllers
         [HttpPost]
         public ActionResult AutoOrder(Order orderInput)
         {
-            orderInput.Date = DateTime.Now;
-            var inventory = from item in db.Inventories
-                            where item.Id == 1
-                            select item;
+            //orderInput.Date = DateTime.Now;
+            //var inventory = from item in db.Inventories
+            //                where item.Id == 1
+            //                select item;
 
-            db.Orders.Add(orderInput);
+            //db.Orders.Add(orderInput);
+            List<OrderItem> orderItems = new List<OrderItem>();
+            Order order = new Order();
+
+            foreach (var item in orderInput.OrderItems) {
+                if (item.Quantity > 0) {
+                    orderItems.Add(item);
+                }
+            }
+            order.Date = DateTime.Now;
+            order.OrderItems = orderItems;
+            db.Orders.Add(order);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

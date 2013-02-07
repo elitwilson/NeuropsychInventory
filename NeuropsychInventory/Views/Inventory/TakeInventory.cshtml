@@ -3,17 +3,23 @@
 @{
     ViewBag.Title = "TakeInventory";
 }
-
-@foreach (var item in Model.Tests)
-{
-    if (item.Products.Count > 0)
+<table>
+    @foreach (var item in Model.Tests)
     {
-        @Html.ActionLink(@item.Abbreviation, "TakeItemInventory", new { inventoryId = Model.InventoryId, testId = item.Id })
-        <br />
+        <tr>
+            <td>@Html.ActionLink(@item.TestName, "TakeItemInventory", new { inventoryId = Model.InventoryId, testId = item.Id })</td>
+            <td>
+                @if (item.IsComplete == true) {
+                    <img src="~/Images/greencheck.png" />
+                }
+                else {
+                    <img src="~/Images/red_x.gif" />
+                }
+            </td>
+        </tr>
     }
+</table>
 
-    
-}
 
 <p />
 @Html.ActionLink("Conclude", "ConcludeInventory")

@@ -12,12 +12,13 @@ namespace NeuropsychInventory.Controllers
 {
     public class InventoryController : Controller
     {
-        private InventoryContext db = new InventoryContext();       
+              
         //
         // GET: /Inventory/
 
         public ActionResult Index()
         {
+            InventoryContext db = new InventoryContext(); 
             TakeInventoryVM vm = new TakeInventoryVM();
             vm.Inventories = db.Inventories
                 .Include(i => i.InventoryItems)
@@ -71,6 +72,7 @@ namespace NeuropsychInventory.Controllers
 
         public ActionResult TakeInventory()
         {
+            InventoryContext db = new InventoryContext();
             TakeInventoryVM vm = new TakeInventoryVM();
             Inventory takeInventory = new Inventory();
 
@@ -123,10 +125,34 @@ namespace NeuropsychInventory.Controllers
         // GET: /Inventory/TakeItemInventory
         public ActionResult TakeItemInventory(int inventoryId, int testId)
         {
+            InventoryContext db = new InventoryContext();
             TestItemInventoryVM vm = new TestItemInventoryVM();
-            vm.RegularlyOrderedProducts = (from x in db.Products
-                                          where x.TestId==testId && x.RegularlyOrdered == true
-                                          select x).ToList();
+
+            var regularlyOrderedProducts = (from p in db.Products
+                                  where p.TestId == testId && p.RegularlyOrdered == true
+                                  select p).ToList();
+
+            var invItems = (from i in db.InventoryItems
+                            where i.Product.TestId == testId && i.InventoryId == inventoryId
+                            select i).ToList();
+
+            foreach (var item in regularlyOrderedProducts) {
+                TestItemInventoryVM.Product p = new TestItemInventoryVM.Product {
+                    Id = item.Id,
+                    Name = item.Name,
+                    MaxInStock = item.MaxInStock,
+                    UnitsInStock = item.UnitsInStock
+                };
+
+                var invItem = (from i in invItems
+                               where i.ProductId == p.Id
+                               select i).FirstOrDefault();
+
+                if (invItem != null) {
+                    p.IsInventoried = true;
+                }
+                vm.RegularlyOrderedProducts.Add(p);
+            }
 
             vm.InventoryId = inventoryId;
             vm.Test = db.Tests.Find(testId);
@@ -140,30 +166,42 @@ namespace NeuropsychInventory.Controllers
         [HttpPost]
         public ActionResult TakeItemInventory(TestItemInventoryVM vm)
         {
-            Product product = new Product();
-            Inventory inventory = new Inventory();
+            InventoryContext db = new InventoryContext();
+            Inventory inventory = db.Inventories.Find(vm.InventoryId);
 
-            foreach (var item in vm.RegularlyOrderedProducts)
-            {
-                //Map VM to product instance
-                product = db.Products.Find(item.Id);
-                product.UnitsInStock = item.UnitsInStock;
-                db.Entry(product).State = EntityState.Modified;
+            foreach (var item in vm.RegularlyOrderedProducts) {
+                Product product = db.Products.Find(item.Id);
+                var retrievedInvItem = (from i in db.InventoryItems
+                                    where i.ProductId == product.Id && i.InventoryId == inventory.Id
+                                    select i).FirstOrDefault();
+                
+                //Ensure Quantity has changed before trying to set values                
+                if (item.UnitsInStock != product.UnitsInStock) {
+                    InventoryItem invItem = new InventoryItem {
+                        Product = product,
+                        ProductId = product.Id,
+                        Inventory = inventory,
+                        InventoryId = inventory.Id,
+                        Quantity = item.UnitsInStock,
+                        IsInventoried = true
+                    };
 
-                //Map vm & product to InventoryItem instance?????
-                inventory = db.Inventories.Find(vm.InventoryId);
+                    //Set UnitsInStock on Product
+                    product.UnitsInStock = item.UnitsInStock;
+                    db.Entry(product).State = EntityState.Modified;
 
-                var inventoryItem = new InventoryItem()
-                {
-                    Product = product,
-                    Inventory = inventory, 
-                    Quantity = product.UnitsInStock
-                };
-                db.InventoryItems.Add(inventoryItem);                
+                    //If record exists, update it.
+                    if (retrievedInvItem != null) {
+                        db.Entry(retrievedInvItem).CurrentValues.SetValues(invItem);
+                    }
+
+                    //If record doesn't exist, add it
+                    else {
+                        db.InventoryItems.Add(invItem);
+                    }
+                }
+                db.SaveChanges();
             }
-
-            db.SaveChanges();
-
             return RedirectToAction("TakeInventory");
         }
 
@@ -171,6 +209,7 @@ namespace NeuropsychInventory.Controllers
         // /Inventory/ConcludeInventory
         public ActionResult ConcludeInventory()
         {
+            InventoryContext db = new InventoryContext();
             var inventories = db.Inventories.Select(x => x).ToList();
             var inv = inventories.LastOrDefault();
             inv.Completed = true;

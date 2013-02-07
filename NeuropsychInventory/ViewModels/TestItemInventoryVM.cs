@@ -11,5 +11,17 @@ namespace NeuropsychInventory.ViewModels
         public int InventoryId { get; set; }
         public Test Test { get; set; }
         public IList<Product> RegularlyOrderedProducts { get; set; }
+
+        public class Product {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int MaxInStock { get; set; }
+            public int UnitsInStock { get; set; }
+            public bool IsInventoried { get; set; }
+        }
+
+        public TestItemInventoryVM() {
+            RegularlyOrderedProducts = new List<Product>();
+        }
     }
 }

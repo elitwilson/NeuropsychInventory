@@ -31,7 +31,12 @@
                 @Model.RegularlyOrderedProducts[i].MaxInStock
             </td>
             <td>
-                
+                @if (Model.RegularlyOrderedProducts[i].IsInventoried == true) {
+                    @:Inventoried!
+                }
+                else {
+                    @:Not Inventoried...
+                }
             </td>
         </tr>
     }

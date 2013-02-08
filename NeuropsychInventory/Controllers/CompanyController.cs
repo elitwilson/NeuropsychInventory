@@ -18,7 +18,7 @@ namespace NeuropsychInventory.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Companies.ToList());
+            return View(db.Companies.OrderBy(x => x.Name).ToList());
         }
 
         //

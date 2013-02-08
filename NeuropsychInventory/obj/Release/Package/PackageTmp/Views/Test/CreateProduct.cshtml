@@ -1,0 +1,91 @@
+﻿@model NeuropsychInventory.ViewModels.CreateProductVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <h3>@Model.TestName</h3>
+    <fieldset>
+        <legend>Create Product</legend>
+        @Html.HiddenFor(model => model.TestId)
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Product.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Product.Name)
+            @Html.ValidationMessageFor(model => model.Product.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Product.PricePerUnit)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Product.PricePerUnit)
+            @Html.ValidationMessageFor(model => model.Product.PricePerUnit)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Product.ItemsPerUnit)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Product.ItemsPerUnit)
+            @Html.ValidationMessageFor(model => model.Product.ItemsPerUnit)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Product.ProductNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Product.ProductNumber)
+            @Html.ValidationMessageFor(model => model.Product.ProductNumber)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Product.Description)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Product.Description)
+            @Html.ValidationMessageFor(model => model.Product.Description)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Product.MaxInStock)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Product.MaxInStock)
+            @Html.ValidationMessageFor(model => model.Product.MaxInStock)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Product.UnitsInStock)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Product.UnitsInStock)
+            @Html.ValidationMessageFor(model => model.Product.UnitsInStock)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Product.RegularlyOrdered)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Product.RegularlyOrdered)
+            @Html.ValidationMessageFor(model => model.Product.RegularlyOrdered)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

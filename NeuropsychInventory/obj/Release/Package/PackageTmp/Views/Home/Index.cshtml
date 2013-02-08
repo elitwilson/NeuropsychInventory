@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "NP Ordering v0.0";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <p>
+                Last inventory was taken on @ViewBag.LastInventory
+            </p>
+            <p>
+                Last order was placed on @ViewBag.LastOrder
+            </p>
+        </div>
+    </section>
+}
+<h3>To Order:</h3>
+<ol class="round">
+    <li class="one">
+        <h5>Take Inventory</h5>
+        Using a mobile phone, @Html.ActionLink("Take Inventory", "Index", "Inventory") by recording the number of items we currently have.        
+    </li>
+    <li class="two">
+        <h5>Auto Order</h5>
+        After taking inventory, click on @Html.ActionLink("Order", "Index", "Order") and select <strong>Auto Order</strong>, review the results and submit.</li>
+    <li class="three">
+        <h5>Done!</h5>
+        Go do something more interesting...
+    </li>
+</ol>

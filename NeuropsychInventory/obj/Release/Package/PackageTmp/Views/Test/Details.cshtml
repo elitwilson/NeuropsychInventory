@@ -1,0 +1,17 @@
+﻿@model NeuropsychInventory.Models.Test
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<h4>@Html.DisplayNameFor(model => model.Name)</h4>
+@Html.DisplayFor(model => model.Name)
+<h4>@Html.DisplayNameFor(model => model.Abbreviation)</h4>
+@Html.DisplayFor(model => model.Abbreviation)
+
+<p>
+    @Html.ActionLink("Edit", "EditTest", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

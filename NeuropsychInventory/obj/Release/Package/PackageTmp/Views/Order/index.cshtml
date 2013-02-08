@@ -1,0 +1,41 @@
+﻿@model NeuropsychInventory.ViewModels.OrderVM
+
+@{
+    ViewBag.Title = "index";
+}
+
+<h2>Ordering</h2>
+
+@if (Model.Inventory.HasAssociatedOrder)
+{
+    <h3>@Html.ActionLink("Place Order Manually", "ManualOrder")</h3>
+    <h4>Note: Ordering by inventory is not available because the most recent inventory has already been used to place an order.
+        <br />
+        To order by inventory, you must first complete a new inventory.
+    </h4>
+    <br />
+}
+else
+{
+    <h3>Order by @Html.ActionLink("Latest Inventory", "AutoOrder") </h3>
+    <p />    
+}
+    <table>
+        <tr>
+            <th>
+                Recent Orders:
+            </th>
+            <th></th>
+        </tr>
+
+            @foreach (var item in Model.Orders)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(@item.Date.ToShortDateString(), "Details", new { id = @item.Id })
+                    </td>
+                </tr>
+            }       
+    </table>
+
+

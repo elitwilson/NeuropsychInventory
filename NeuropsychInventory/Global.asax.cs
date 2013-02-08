@@ -26,7 +26,7 @@ namespace NeuropsychInventory
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Database.SetInitializer<InventoryContext>(new InventoryInitializer());
+            //Database.SetInitializer<InventoryContext>(new InventoryInitializer());
         }
     }
 }

@@ -47,9 +47,11 @@ namespace NeuropsychInventory.Controllers
             InventoryContext db = new InventoryContext();
 
             Inventory inventory = db.Inventories.Find(id);
-            var allInventoryItems = from invItems in db.InventoryItems
+            var allInventoryItems = (from invItems in db.InventoryItems
                                     where invItems.InventoryId == id
-                                    select invItems;
+                                    select invItems)
+                                    .OrderBy(x => x.Product.Test.Abbreviation)
+                                    .ThenBy(x => x.Product.Name);
 
             foreach (var item in allInventoryItems)
             {

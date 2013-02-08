@@ -400,9 +400,21 @@ fieldset {
         cursor: pointer;
         font-size: 1.2em;
         font-weight: 600;
+        color: black;
         padding: 7px;
     }
-
+    a.btn {
+        background-color: #d3dce0;
+        border: 1px solid #787878;
+        cursor: pointer;
+        font-size: 1.2em;
+        font-weight: 600;
+        padding: 7px;
+        text-decoration: none;
+    }
+    .item-inv-textbox {
+        width: 45px;
+    }
 /* ajax login/registration dialog */
 .ui-dialog {
     font-family: inherit;
@@ -737,6 +749,11 @@ tr.pager td {
         width: auto;
     }
 
+    /* other
+    ----------------------------------------------------------*/
+    a.mobile-link {
+        font: bold 18px arial, verdana;
+    }
     /* footer
     ----------------------------------------------------------*/
     footer .float-left,

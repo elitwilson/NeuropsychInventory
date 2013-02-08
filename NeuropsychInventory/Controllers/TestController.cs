@@ -23,7 +23,9 @@ namespace NeuropsychInventory.Controllers
             
             var products = db.Products
                 .Include(p => p.Test)
-                .OrderBy(p => p.Test.Abbreviation).ToList();
+                .OrderBy(p => p.Test.Abbreviation)
+                .ThenBy(p => p.Name)
+                .ToList();
 
             var allTests = (from t in db.Tests
                             select new {
@@ -103,7 +105,7 @@ namespace NeuropsychInventory.Controllers
 
         public ActionResult CreateTest()
         {
-            ViewBag.CompanyId = new SelectList(db.Companies, "Id", "Name");
+            ViewBag.CompanyId = new SelectList(db.Companies.OrderBy(x => x.Name), "Id", "Name");
             return View();
         }
 

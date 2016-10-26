@@ -412,6 +412,9 @@ fieldset {
         padding: 7px;
         text-decoration: none;
     }
+    .item-inv-textbox {
+        width: 45px;
+    }
 /* ajax login/registration dialog */
 .ui-dialog {
     font-family: inherit;

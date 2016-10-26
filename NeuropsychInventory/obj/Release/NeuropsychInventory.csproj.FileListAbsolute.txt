@@ -33,3 +33,40 @@ C:\Users\etwilson\Documents\Visual Studio 2012\Projects\NeuropsychInventory\Neur
 C:\Users\etwilson\Documents\Visual Studio 2012\Projects\NeuropsychInventory\NeuropsychInventory\bin\System.Web.WebPages.Razor.xml
 C:\Users\etwilson\Documents\Visual Studio 2012\Projects\NeuropsychInventory\NeuropsychInventory\obj\Release\NeuropsychInventory.dll
 C:\Users\etwilson\Documents\Visual Studio 2012\Projects\NeuropsychInventory\NeuropsychInventory\obj\Release\NeuropsychInventory.pdb
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\NeuropsychInventory.dll.config
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\NeuropsychInventory.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\NeuropsychInventory.pdb
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\Antlr3.Runtime.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\EntityFramework.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\Microsoft.Web.Infrastructure.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\Newtonsoft.Json.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Net.Http.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Net.Http.Formatting.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Net.Http.WebRequest.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.Helpers.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.Http.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.Http.WebHost.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.Mvc.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.Optimization.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.Providers.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.Razor.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.WebPages.Deployment.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.WebPages.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.WebPages.Razor.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\WebGrease.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\Newtonsoft.Json.xml
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Net.Http.xml
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Net.Http.Formatting.xml
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Net.Http.WebRequest.xml
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.Http.xml
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.Http.WebHost.xml
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\EntityFramework.xml
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.Helpers.xml
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.Mvc.xml
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.Razor.xml
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.WebPages.xml
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.WebPages.Deployment.xml
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\bin\System.Web.WebPages.Razor.xml
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\obj\Release\NeuropsychInventory.csprojResolveAssemblyReference.cache
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\obj\Release\NeuropsychInventory.dll
+C:\Projects\npinventory\NeuropsychInventory\NeuropsychInventory\obj\Release\NeuropsychInventory.pdb
